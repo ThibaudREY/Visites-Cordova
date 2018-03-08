@@ -8,9 +8,9 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import VueResource from 'vue-resource'
 
 const configs = {
-  agentApi: 'http://localhost:8080/agent',
-  clientApi: 'http://localhost:8080/agent',
-  tourApi: 'http://localhost:8080/visites'
+  agentApi: 'http://51.254.219.112:8080/agent',
+  clientApi: 'http://51.254.219.112:8080/visiteur',
+  tourApi: 'http://51.254.219.112:8080/visite'
 }
 
 Vue.use(VueResource)
@@ -18,7 +18,7 @@ Vue.use(Router)
 Vue.use(vueConfig, configs)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyBgY4J3poPqV8GHM168oS9sgXd3fWFdddE',
+    key: 'AIzaSyBgY4J3poPqV8GHM168oS9sgXd3fWFdddE', // TODO: Generate a proper key
     libraries: 'places'
   }
 })

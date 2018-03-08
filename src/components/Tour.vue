@@ -22,21 +22,21 @@
                         </li>
                     </ul>
 
-                    <div :id="`info-${id}`">
+                    <div :id="`info-${this.tour.id}`">
                         <div class="container">
                             <div class="row"></div>
                             <div class="row">
                                 <div class="col s3">
-                                    <p>Nom Prenom</p>
+                                    <p></p>
                                 </div>
                                 <div class="col s3">
-                                    <p>Nom Prenom</p>
+                                    <p></p>
                                 </div>
                                 <div class="col s3">
-                                    <p>01/01/2000 15:00</p>
+                                    <p>{{this.tour.date_visite}}</p>
                                 </div>
                                 <div class="col s3">
-                                    <p>9 Rue whatever 000000 Ville</p>
+                                    <p>{{this.tour.adresse}}</p>
                                 </div>
                             </div>
                         </div>
@@ -72,12 +72,11 @@
 /* global $ */
     export default {
       name: 'Tour',
-      props: {
-        id: 1
-      },
+      props: ['tour'],
       components: {},
       mounted () {
         $('ul.tabs').tabs()
+        console.log(this.tour)
       }
     }
 </script>

@@ -8,7 +8,7 @@
                     <div class="card z-depth-2">
                         <div class="container">
                             <div class="row">
-                                <form class="col s12">
+                                <div class="col s12">
                                     <div class="row">
                                         <div class="col s12">
                                             <gmap-map class="gmap"
@@ -49,7 +49,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
