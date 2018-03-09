@@ -207,7 +207,7 @@ export default {
 
         Object.values(JSON.parse(response.bodyText)).forEach(agent => {
           $('#agent').append($('<option></option>')
-                          .attr('value', agent.id).text(`${agent.firstName} ${agent.lastName} ${agent.telephone}`))
+                          .attr('value', agent.id).text(`${agent.first_name} ${agent.last_name} ${agent.telephone}`))
         })
         $('#agent').select2()
 
@@ -217,7 +217,7 @@ export default {
           $('#client').html('')
           Object.values(JSON.parse(localStorage.getItem('agentList'))).forEach(agent => {
             $('#agent').append($('<option></option>')
-                              .attr('value', agent.id).text(`${agent.firstName} ${agent.lastName} ${agent.telephone}`))
+                              .attr('value', agent.id).text(`${agent.first_name} ${agent.last_name} ${agent.telephone}`))
           })
           $('#agent').select2()
         } else {
@@ -238,7 +238,7 @@ export default {
 
         Object.values(JSON.parse(response.bodyText)).forEach(agent => {
           $('#client').append($('<option></option>')
-                          .attr('value', agent.id).text(`${agent.firstName} ${agent.lastName} ${agent.telephone}`))
+                          .attr('value', agent.id).text(`${agent.first_name} ${agent.last_name} ${agent.telephone}`))
         })
         $('#client').select2()
 
@@ -248,7 +248,7 @@ export default {
           $('#client').html('')
           Object.values(JSON.parse(localStorage.getItem('clientList'))).forEach(client => {
             $('#client').append($('<option></option>')
-                                .attr('value', client.id).text(`${client.firstName} ${client.lastName} ${client.telephone}`))
+                                .attr('value', client.id).text(`${client.first_name} ${client.last_name} ${client.telephone}`))
           })
           $('#client').select2()
         } else {
