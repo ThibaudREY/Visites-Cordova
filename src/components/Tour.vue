@@ -1,84 +1,98 @@
 <template>
-    <div class="row">
-        <div class="col s12 m6">
-            <div class="card z-depth-2">
-                <div class="card-image">
-                    <img src="https://orig00.deviantart.net/ede7/f/2016/103/7/8/april_12_2016_house_sketch_by_karisean-d9yta0s.png">
-                    <span class="card-title">Visite</span>
-                    <a class="btn-floating halfway-fab waves-effect waves-light red"><i
-                            class="material-icons">delete</i></a>
-                    <a class="half-fab-2nd btn-floating halfway-fab waves-effect waves-light blue"><i
-                            class="material-icons">edit</i></a>
-                    <a class="half-fab-5th btn-floating halfway-fab waves-effect waves-light light-green accent-4"><i
-                            class="material-icons">phone</i></a>
-                </div>
-                <div class="card-content white lighten-4">
-                    <ul class="tabs tab-fixed-width">
-                        <li class="tab col s3 active">
-                            <a :href="`#info-${id}`">Informations</a>
-                        </li>
-                        <li class="tab col s3">
-                            <a :href="`#share-${id}`">Exporter</a>
-                        </li>
-                    </ul>
-
-                    <div :id="`info-${this.tour.id}`">
-                        <div class="container">
-                            <div class="row"></div>
-                            <div class="row">
-                                <div class="col s3">
-                                    <p></p>
-                                </div>
-                                <div class="col s3">
-                                    <p></p>
-                                </div>
-                                <div class="col s3">
-                                    <p>{{this.tour.date_visite}}</p>
-                                </div>
-                                <div class="col s3">
-                                    <p>{{this.tour.adresse}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div :id="`share-${id}`">
-                        <div class="container">
-                            <div class="row"></div>
-                            <div class="row">
-                                <div class="col s4">
-                                    <a class="btn-floating red">
-                                        <i class="material-icons">mail</i>
-                                    </a>
-                                </div>
-                                <div class="col s4">
-                                    <a class="btn-floating grey darken-1">
-                                        <i class="material-icons">print</i>
-                                    </a>
-                                </div>
-                                <div class="col s4">
-                                    <a class="btn-floating deep-purple">
-                                        <i class="material-icons">picture_as_pdf</i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="card z-depth-2">
+        <div class="card-image">
+          <img
+            src="https://orig00.deviantart.net/ede7/f/2016/103/7/8/april_12_2016_house_sketch_by_karisean-d9yta0s.png">
+          <span class="card-title">Visite</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i
+            class="material-icons">delete</i></a>
+          <a class="half-fab-2nd btn-floating halfway-fab waves-effect waves-light blue"><i
+            class="material-icons">edit</i></a>
+          <a class="half-fab-5th btn-floating halfway-fab waves-effect waves-light light-green accent-4"><i
+            class="material-icons">phone</i></a>
         </div>
+        <div class="card-content white lighten-4">
+          <ul class="tabs tab-fixed-width">
+            <li class="tab col s3 active">
+              <a :href="`#info-${this.tour.id}`">Informations</a>
+            </li>
+            <li class="tab col s3">
+              <a :href="`#share-${this.tour.id}`">Exporter</a>
+            </li>
+          </ul>
+
+          <div :id="`info-${this.tour.id}`">
+            <div class="container">
+              <div class="row"></div>
+              <div class="row">
+                <div class="col s3">
+                  <p>{{this.agent.first_name}} {{this.agent.last_name}}</p>
+                </div>
+                <div class="col s3">
+                  <p>{{this.client.first_name}} {{this.client.last_name}}</p>
+                </div>
+                <div class="col s3">
+                  <p>{{this.tour.date_visite}}</p>
+                </div>
+                <div class="col s3">
+                  <p>{{this.tour.adresse}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div :id="`share-${this.tour.id}`">
+            <div class="container">
+              <div class="row"></div>
+              <div class="row">
+                <div class="col s4">
+                  <a class="btn-floating red">
+                    <i class="material-icons">mail</i>
+                  </a>
+                </div>
+                <div class="col s4">
+                  <a class="btn-floating grey darken-1">
+                    <i class="material-icons">print</i>
+                  </a>
+                </div>
+                <div class="col s4">
+                  <a class="btn-floating deep-purple">
+                    <i class="material-icons">picture_as_pdf</i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-/* global $ */
-    export default {
-      name: 'Tour',
-      props: ['tour'],
-      components: {},
-      mounted () {
-        $('ul.tabs').tabs()
-        console.log(this.tour)
+  /* global $ */
+  export default {
+    name: 'Tour',
+    props: ['tour'],
+    components: {},
+    data () {
+      return {
+        agent: null,
+        client: null
       }
+    },
+    updated () {
+      $('ul.tabs').tabs()
+    },
+    mounted () {
+      this.$http.get(`${this.$config.agentApi}/${this.tour.id_agent}`).then(response => {
+        this.agent = JSON.parse(response.bodyText)
+      })
+      this.$http.get(`${this.$config.clientApi}/${this.tour.id_visiteur}`).then(response => {
+        this.client = JSON.parse(response.bodyText)
+      })
     }
+  }
 </script>
 
 <style>
