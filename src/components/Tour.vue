@@ -8,8 +8,9 @@
           <span class="card-title">Visite</span>
           <a class="btn-floating halfway-fab waves-effect waves-light red"><i
             class="material-icons">delete</i></a>
-          <a class="half-fab-2nd btn-floating halfway-fab waves-effect waves-light blue"><i
-            class="material-icons">edit</i></a>
+          <router-link :to="{name: 'Edit', params: {tour: this.tour}}" class="half-fab-2nd btn-floating halfway-fab waves-effect waves-light blue">
+            <i class="material-icons">edit</i>
+          </router-link>
           <a class="half-fab-5th btn-floating halfway-fab waves-effect waves-light light-green accent-4"><i
             class="material-icons">phone</i></a>
         </div>
