@@ -70,7 +70,8 @@
                   client: this.$route.params.client,
                   address: this.$route.params.address,
                   clientSignature: this.clientSignature,
-                  agentSignature: this.agentSignature
+                  agentSignature: this.agentSignature,
+                  id: this.$route.params.id
                 }
               }
             )

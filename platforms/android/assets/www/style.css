@@ -41,9 +41,7 @@
     margin-top: 35%;
 }
 
-.canvas {
-    height: 50vh;
-    width: 50vh;
-    border: 1px solid red;
-    margin-left: -5px;
+canvas {
+    width: 100%;
+    border: 2px solid red;
 }

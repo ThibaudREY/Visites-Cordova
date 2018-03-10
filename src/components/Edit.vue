@@ -1,6 +1,6 @@
 <template>
     <div>
-        <navbar :title="'Nouvelle visite'"/>
+        <navbar :title="this.$route.params.tour ? 'Modifier la visite' : 'Nouvelle visite'"/>
         <div class="spacer"></div>
         <div class="container" id="app">
             <div class="row">
@@ -14,7 +14,7 @@
                                             <gmap-map class="gmap"
                                                       :center="{lat: this.lat, lng: this.lng}"
                                                       :zoom="17"
-                                            />
+                                            ></gmap-map>
                                             <a v-on:click="locate()" class="locate btn-floating btn-large waves-effect waves-light red">
                                                 <i class="material-icons">my_location</i>
                                             </a>
@@ -22,7 +22,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="input-field col s12">
-                                            <input value="" id="address" type="text" class="validate">
+                                            <input :value="this.$route.params.tour ? this.$route.params.tour.adresse : ''" id="address" type="text" class="validate">
                                             <label for="address">Adresse</label>
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@ export default {
         )
     },
     doAddAgent () {
-      let int = setInterval(this.$http.post(`${this.$config.clientApi}?first_name=${$('#AgentFirstname').val()}&last_name=${$('#AgentLastname').val()}&telephone=${$('#AgentPhone').val()}`, {}, {emulateJSON: true}).then(
+      let int = setInterval(this.$http.post(`${this.$config.agentApi}?first_name=${$('#AgentFirstname').val()}&last_name=${$('#AgentLastname').val()}&telephone=${$('#AgentPhone').val()}`, {}, {emulateJSON: true}).then(
         response => {
           this.agentList(response.body)
           clearInterval(int)
@@ -211,7 +211,9 @@ export default {
         })
         $('#agent').select2()
 
-        $('#agent').val(id)
+        setTimeout(() => {
+          $('#agent').val(id).trigger('change')
+        }, 50)
       }, () => {
         if (localStorage.getItem('agentList') != null) {
           $('#client').html('')
@@ -220,6 +222,10 @@ export default {
                               .attr('value', agent.id).text(`${agent.first_name} ${agent.last_name} ${agent.telephone}`))
           })
           $('#agent').select2()
+
+          setTimeout(() => {
+            $('#agent').val(id).trigger('change')
+          }, 50)
         } else {
           $('#modal-title').html('Aucune connexion')
           $('#modal-text').html('Veuillez vous connecter à Internet et réessayez')
@@ -242,7 +248,9 @@ export default {
         })
         $('#client').select2()
 
-        $('#agent').val(id).change()
+        setTimeout(() => {
+          $('#client').val(id).trigger('change')
+        }, 50)
       }, () => {
         if (localStorage.getItem('clientList') != null) {
           $('#client').html('')
@@ -251,6 +259,10 @@ export default {
                                 .attr('value', client.id).text(`${client.first_name} ${client.last_name} ${client.telephone}`))
           })
           $('#client').select2()
+
+          setTimeout(() => {
+            $('#client').val(id).trigger('change')
+          }, 50)
         } else {
           $('#modal-title').html('Aucune connexion')
           $('#modal-text').html('Veuillez vous connecter à Internet et réessayez')
@@ -260,11 +272,6 @@ export default {
         }
       })
     },
-    populate () {
-      $('#address').val(this.$route.params.address ? this.$route.params.address : '')
-      $('#agent').val(this.$route.params.agent ? this.$route.params.agent : '')
-      $('#client').val(this.$route.params.agent ? this.$route.params.agent : '')
-    },
     send () {
       this.$router.push(
         {
@@ -272,18 +279,19 @@ export default {
           params: {
             agent: $('#agent').val(),
             client: $('#client').val(),
-            address: $('#address').val()
+            address: $('#address').val(),
+            id: this.$route.params.tour ? this.$route.params.tour.id : undefined
           }
         }
           )
     }
   },
   created () {
-    this.agentList()
+    this.agentList(this.$route.params.tour ? this.$route.params.tour.id_agent : null)
 
-    this.clientList()
-
-    this.populate()
+    setTimeout(() => {
+      this.clientList(this.$route.params.tour ? this.$route.params.tour.id_visiteur : null)
+    }, 500)
 
     $('#modal-button').on('click', () => {
       location.reload()
