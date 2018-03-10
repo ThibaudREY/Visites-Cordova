@@ -7,13 +7,13 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.example.app"
-    },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.example.app"
     },
-    "mx.ferreyra.callnumber": {
+    "call-number": {
+      "PACKAGE_NAME": "com.example.app"
+    },
+    "cordova-plugin-device": {
       "PACKAGE_NAME": "com.example.app"
     }
   },

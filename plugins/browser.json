@@ -10,10 +10,10 @@
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
-    "cordova-plugin-device": {
+    "call-number": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
-    "mx.ferreyra.callnumber": {
+    "cordova-plugin-device": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   },
