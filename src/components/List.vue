@@ -3,7 +3,7 @@
         <navbar :title="'Visites'"/>
         <div class="spacer"></div>
         <div class="container" id="app">
-            <tour v-for="tour in this.tours" :tour="tour" />
+            <tour v-for="tour in this.tours" :tour="tour"/>
         </div>
     </div>
 </template>
@@ -25,9 +25,12 @@
     },
     methods: {
       loadList () {
-        this.$http.get(`${this.$config.tourApi}/all`).then(res => {
-          this.tours = JSON.parse(res.bodyText)
-        })
+        let int = setInterval(() => {
+          this.$http.get(`${this.$config.tourApi}/all`).then(res => {
+            this.tours = JSON.parse(res.bodyText)
+            clearInterval(int)
+          })
+        }, 800)
       },
       startup () {
         this.loadList()
