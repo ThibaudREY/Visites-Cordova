@@ -293,6 +293,17 @@ export default {
       this.clientList(this.$route.params.tour ? this.$route.params.tour.id_visiteur : null)
     }, 500)
 
+    if (this.$route.params.tour) {
+      let geocoder = new google.maps.Geocoder()
+      let that = this
+      geocoder.geocode({'address': that.$route.params.tour.adresse}, (results, status) => {
+        if (status === 'OK') {
+          this.lat = results[0].geometry.location.lat
+          this.lng = results[0].geometry.location.lng
+        }
+      })
+    }
+
     $('#modal-button').on('click', () => {
       location.reload()
     })
