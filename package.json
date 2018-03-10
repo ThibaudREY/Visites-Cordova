@@ -16,6 +16,7 @@
     "android-vm": "npm run build && cordova run android"
   },
   "dependencies": {
+    "call-number": "^1.0.1",
     "cordova-android": "^6.4.0",
     "cordova-browser": "^5.0.3",
     "cordova-plugin-device": "^2.0.1",
@@ -88,7 +89,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-device": {},
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "mx.ferreyra.callnumber": {}
     },
     "platforms": [
       "browser",

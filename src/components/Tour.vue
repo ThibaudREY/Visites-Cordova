@@ -12,7 +12,7 @@
             <router-link :to="{name: 'Edit', params: {tour: this.tour}}" class="half-fab-2nd btn-floating halfway-fab waves-effect waves-light blue">
               <i class="material-icons">edit</i>
             </router-link>
-            <a class="half-fab-5th btn-floating halfway-fab waves-effect waves-light light-green accent-4"><i
+            <a v-on:click="call()" class="half-fab-5th btn-floating halfway-fab waves-effect waves-light light-green accent-4"><i
               class="material-icons">phone</i></a>
           </div>
           <div class="card-content white lighten-4">
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-  /* global $ */
+  /* global $, Materialize */
   export default {
     name: 'Tour',
     props: ['tour'],
@@ -117,6 +117,11 @@
         this.$http.delete(`${this.$config.tourApi}/${this.tour.id}`).then(() => {
           this.$parent.loadList()
         })
+      },
+      call () {
+        window.plugins.CallNumber.callNumber(() => {}, () => {
+          Materialize.toast('Une erreur s\'est produite', 4000)
+        }, this.client.telephone, true)
       }
     }
   }
