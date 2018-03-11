@@ -10,7 +10,21 @@
                 <div class="collapsible-header active"><i class="material-icons">today</i>Rechercher par une date</div>
                   <div class="collapsible-body">
                     <span><div id="date-slider"></div></span>
-                  </div>
+                    <div class="col s6">
+                    <div class="center align">
+                      <span id="event-start"></span>
+                      </div>
+
+                    </div>
+                    <div class="col s6">
+                      <div class="center align">
+                      <span id="event-end"></span>
+                      </div>
+
+                    </div>
+                    </div>
+
+
               </li>
               <li>
                 <div class="collapsible-header"><i class="material-icons">person</i>Rechercher un agent</div>
@@ -107,20 +121,53 @@
         })
       },
 
+      timestamp(str){
+        return new Date(str).getTime()
+      },
+
+      formatDate (date) {
+        var months = ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet',
+          'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre']
+        return date.getDate()+ ' ' +
+          months[date.getMonth()] + ' ' +
+          date.getFullYear()
+      },
+
+      toFormat (time) {
+        return this.formatDate(new Date(time))
+      },
+
       createSlider(){
-        var slider = document.getElementById('date-slider')
-        noUiSlider.create(slider, {
-          start: [20, 80],
+
+        var date = new Date()
+
+        // start date
+        var startDate = new Date()
+        startDate.setFullYear(startDate.getFullYear() - 3)
+
+        var dateSlider = document.getElementById('date-slider')
+
+        // nouislider settings
+        noUiSlider.create(dateSlider, {
+          behaviour: 'tap',
           connect: true,
-          step: 1,
-          orientation: 'horizontal', // 'horizontal' or 'vertical'
+          tooltips: [ true, true ],
+          format: { to: this.toFormat, from: Number },
           range: {
-            'min': 0,
-            'max': 100
+            min: this.timestamp('2016-01-01') + 24 * 60 * 60 * 1000,
+            max: this.timestamp(date)
           },
-          format: wNumb({
-            decimals: 0
-          })
+          step: 1 * 24 * 60 * 60 * 1000,
+          start: [this.timestamp(startDate), this.timestamp(date)]
+        })
+
+        // get range infos at html
+        var dateValues = [
+          document.getElementById('event-start'), document.getElementById('event-end')
+        ]
+
+        dateSlider.noUiSlider.on('update', function( values, handle ) {
+          dateValues[handle].innerHTML = values[handle]
         })
       },
 
