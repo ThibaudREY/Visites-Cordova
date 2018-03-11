@@ -58,7 +58,6 @@
       </div>
     </div>
 
-
     <div id="addAgentModal" class="modal modal-fixed-footer">
       <div class="modal-content">
         <h4>Nouvel agent</h4>
@@ -130,8 +129,8 @@
         <a v-on:click="doAddClient()" class="modal-action modal-close waves-effect waves-green btn-flat ">Ajouter</a>
       </div>
     </div>
+
     <div id="updateAgentModal" class="modal modal-fixed-footer">
-      <div style="display: none;" id="updateAgentId"></div>
       <div class="modal-content">
         <h4>Modifier un agent</h4>
         <div class="container">
@@ -168,7 +167,6 @@
     </div>
 
     <div id="updateClientModal" class="modal modal-fixed-footer">
-      <div style="display: none;" id="updateClientId"></div>
       <div class="modal-content">
         <h4>Modifier un visiteur</h4>
         <div class="container">
@@ -203,6 +201,36 @@
         <a v-on:click="doUpdateClient()" class="modal-action modal-close waves-effect waves-green btn-flat ">Modifier</a>
       </div>
     </div>
+
+    <div id="deleteClientModal" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <h4>Supprimer un visiteur</h4>
+        <div class="container">
+          <div class="row">
+            Êtes vous sûr de vouloir supprimer le visiteur:
+            <p id="deleteClientString"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a v-on:click="doDeleteClient()" class="modal-action modal-close waves-effect waves-green btn-flat ">Supprimer</a>
+      </div>
+    </div>
+
+    <div id="deleteAgentModal" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <h4>Supprimer un visiteur</h4>
+        <div class="container">
+          <div class="row">
+            Êtes vous sûr de vouloir supprimer l'agent:
+            <p id="deleteAgentString"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a v-on:click="doDeleteAgent()" class="modal-action modal-close waves-effect waves-green btn-flat ">Supprimer</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -224,13 +252,15 @@
         lng: 0,
         lat: 0,
         updateClientId: null,
-        updateAgentId: null
+        updateAgentId: null,
+        deleteClientId: null,
+        deleteAgentId: null
       }
     },
     methods: {
       // Ajoute les icônes de modification et suppression sur le select2
       iconFormatSelect2 (item) {
-        return $(`<div>${item.text} <div class="iconRight"><i class="material-icons prefix" id="${item.id}">edit</i><i class="material-icons prefix">delete</i></div></div>`)
+        return $(`<div>${item.text} <div class="iconRight"><i class="material-icons prefix edit" id="${item.id}">edit</i><i class="material-icons prefix delete" id="${item.id}">delete</i></div></div>`)
       },
       // Centre la map sur la position GPS courante
       locate () {
@@ -271,6 +301,7 @@
         $('#addClientModal').modal('open')
       },
       doAddClient () {
+        // TODO: Mettre à jour l'API pour passer les params en post
         let int = setInterval(this.$http.post(`${this.$config.clientApi}?first_name=${$('#ClientFirstname').val()}&last_name=${$('#ClientLastname').val()}&telephone=${$('#ClientPhone').val()}`, {}, {emulateJSON: true}).then(
           response => {
             this.clientList(response.body)
@@ -280,6 +311,7 @@
         )
       },
       doAddAgent () {
+        // TODO: Mettre à jour l'API pour passer les params en post
         let int = setInterval(this.$http.post(`${this.$config.agentApi}?first_name=${$('#AgentFirstname').val()}&last_name=${$('#AgentLastname').val()}&telephone=${$('#AgentPhone').val()}`, {}, {emulateJSON: true}).then(
           response => {
             this.agentList(response.body)
@@ -287,6 +319,22 @@
           }),
           800
         )
+      },
+      doDeleteClient () {
+        let int = setInterval(this.$http.delete(`${this.$config.clientApi}/${this.deleteClientId}`, {}, {emulateJSON: true}).then(
+          response => {
+            this.clientList()
+            clearInterval(int)
+          }
+        ))
+      },
+      doDeleteAgent () {
+        let int = setInterval(this.$http.delete(`${this.$config.agentApi}/${this.deleteAgentId}`, {}, {emulateJSON: true}).then(
+          response => {
+            this.agentList()
+            clearInterval(int)
+          }
+        ))
       },
       doUpdateAgent () {
         let int = setInterval(
@@ -348,18 +396,29 @@
           // Event Handler du click sur l'icône d'édition d'un agent
           $('#agent').on('select2:select select2:unselect', (e) => {
             if (!isNaN($(e.params.originalEvent.target).attr('id'))) {
-              // TODO: vérifier que le click soit fait sur update ou delete
-              this.$http.get(`${this.$config.agentApi}/${$(e.params.originalEvent.target).attr('id')}`).then(
-                response => {
-                  let agent = JSON.parse(response.bodyText)
-                  this.updateAgentId = $(e.params.originalEvent.target).attr('id')
-                  $('#updateAgentFirstname').val(agent.first_name).trigger('focusin')
-                  $('#updateAgentLastname').val(agent.last_name).trigger('focusin')
-                  $('#updateAgentPhone').val(agent.telephone).trigger('focusin')
-                  $('#updateAgentModal').modal()
-                  $('#updateAgentModal').modal('open')
-                }
-              )
+              if (e.params.originalEvent.target.classList.contains('edit')) {
+                this.$http.get(`${this.$config.agentApi}/${$(e.params.originalEvent.target).attr('id')}`).then(
+                  response => {
+                    let agent = JSON.parse(response.bodyText)
+                    this.updateAgentId = $(e.params.originalEvent.target).attr('id')
+                    $('#updateAgentFirstname').val(agent.first_name).trigger('focusin')
+                    $('#updateAgentLastname').val(agent.last_name).trigger('focusin')
+                    $('#updateAgentPhone').val(agent.telephone).trigger('focusin')
+                    $('#updateAgentModal').modal()
+                    $('#updateAgentModal').modal('open')
+                  }
+                )
+              } else if (e.params.originalEvent.target.classList.contains('delete')) {
+                this.$http.get(`${this.$config.agentApi}/${$(e.params.originalEvent.target).attr('id')}`).then(
+                  response => {
+                    let agent = JSON.parse(response.bodyText)
+                    this.deleteAgentId = $(e.params.originalEvent.target).attr('id')
+                    $('#deleteAgentString').html(`${agent.first_name} ${agent.last_name} ${agent.telephone}`)
+                    $('#deleteAgentModal').modal()
+                    $('#deleteAgentModal').modal('open')
+                  }
+                )
+              }
             }
           })
 
@@ -415,18 +474,29 @@
 
           $('#client').on('select2:select', (e) => {
             if (!isNaN($(e.params.originalEvent.target).attr('id'))) {
-              // TODO: vérifier que le click soit fait sur update ou delete
-              this.$http.get(`${this.$config.clientApi}/${$(e.params.originalEvent.target).attr('id')}`).then(
-                response => {
-                  let client = JSON.parse(response.bodyText)
-                  this.updateClientId = $(e.params.originalEvent.target).attr('id')
-                  $('#updateClientFirstname').val(client.first_name).trigger('focusin')
-                  $('#updateClientLastname').val(client.last_name).trigger('focusin')
-                  $('#updateClientPhone').val(client.telephone).trigger('focusin')
-                  $('#updateClientModal').modal()
-                  $('#updateClientModal').modal('open')
-                }
-              )
+              if (e.params.originalEvent.target.classList.contains('edit')) {
+                this.$http.get(`${this.$config.clientApi}/${$(e.params.originalEvent.target).attr('id')}`).then(
+                  response => {
+                    let client = JSON.parse(response.bodyText)
+                    this.updateClientId = $(e.params.originalEvent.target).attr('id')
+                    $('#updateClientFirstname').val(client.first_name).trigger('focusin')
+                    $('#updateClientLastname').val(client.last_name).trigger('focusin')
+                    $('#updateClientPhone').val(client.telephone).trigger('focusin')
+                    $('#updateClientModal').modal()
+                    $('#updateClientModal').modal('open')
+                  }
+                )
+              } else if (e.params.originalEvent.target.classList.contains('delete')) {
+                this.$http.get(`${this.$config.clientApi}/${$(e.params.originalEvent.target).attr('id')}`).then(
+                  response => {
+                    let client = JSON.parse(response.bodyText)
+                    this.deleteClientId = $(e.params.originalEvent.target).attr('id')
+                    $('#deleteClientString').html(`${client.first_name} ${client.last_name} ${client.telephone}`)
+                    $('#deleteClientModal').modal()
+                    $('#deleteClientModal').modal('open')
+                  }
+                )
+              }
             }
           })
 
@@ -455,17 +525,23 @@
         })
       },
       send () {
-        this.$router.push(
-          {
-            name: 'Sign',
-            params: {
-              agent: $('#agent').val(),
-              client: $('#client').val(),
-              address: $('#address').val(),
-              id: this.$route.params.tour ? this.$route.params.tour.id : undefined
+        if (
+          $('#agent').val() !== null &&
+          $('#client').val() !== null &&
+          $('#client').val() !== ''
+        ) {
+          this.$router.push(
+            {
+              name: 'Sign',
+              params: {
+                agent: $('#agent').val(),
+                client: $('#client').val(),
+                address: $('#address').val(),
+                id: this.$route.params.tour ? this.$route.params.tour.id : undefined
+              }
             }
-          }
-        )
+          )
+        }
       }
     },
     created () {

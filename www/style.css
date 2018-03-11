@@ -49,3 +49,7 @@ canvas {
 .iconRight {
   float: right;
 }
+
+.delete {
+  margin-left: 20px;
+}
