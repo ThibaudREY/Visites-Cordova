@@ -2,7 +2,15 @@
   "cordova-plugin-whitelist": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-whitelist@1"
+      "id": "cordova-plugin-whitelist@^1.3.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "call-number": {
+    "source": {
+      "type": "registry",
+      "id": "mx.ferreyra.callnumber@~0.0.2"
     },
     "is_top_level": true,
     "variables": {}
@@ -11,14 +19,6 @@
     "source": {
       "type": "registry",
       "id": "cordova-plugin-device@^2.0.1"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
-  "mx.ferreyra.callnumber": {
-    "source": {
-      "type": "registry",
-      "id": "call-number"
     },
     "is_top_level": true,
     "variables": {}

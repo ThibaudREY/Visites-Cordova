@@ -4,6 +4,7 @@ import vueConfig from 'vue-config'
 import List from '@/components/List'
 import Edit from '@/components/Edit'
 import Sign from '@/components/Sign'
+import Search from '@/components/Search'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueResource from 'vue-resource'
 
@@ -49,6 +50,11 @@ export default new Router({
       path: '/sign',
       name: 'Sign',
       component: Sign
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search
     }
   ]
 })

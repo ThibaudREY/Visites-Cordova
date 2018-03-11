@@ -7,7 +7,10 @@
                     <i class="material-icons">add</i>
                 </router-link>
                 <a class="half-fab-2nd btn-floating btn-large halfway-fab waves-effect waves-light teal">
+                  <router-link :to="{ name: 'Search', params: { tour: {} }}" class="btn-floating btn-large waves-effect waves-light teal">
                     <i class="material-icons">search</i>
+                  </router-link>
+
                 </a>
             </div>
         </nav>
