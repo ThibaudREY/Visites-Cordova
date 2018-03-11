@@ -25,6 +25,7 @@
     },
     methods: {
       loadList () {
+        this.tours = null
         let int = setInterval(() => {
           this.$http.get(`${this.$config.tourApi}/all`).then(res => {
             this.tours = JSON.parse(res.bodyText)
