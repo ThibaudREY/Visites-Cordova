@@ -59,7 +59,7 @@
                     </a>
                   </div>
                   <div class="col s4">
-                    <a class="btn-floating deep-purple">
+                    <a v-on:click="pdf()" class="btn-floating deep-purple">
                       <i class="material-icons">picture_as_pdf</i></a>
                   </div>
                 </div>
@@ -87,6 +87,10 @@
 
 <script>
   /* global $, Materialize */
+
+  import doc from '../utils/doc'
+  import file from '../utils/file'
+
   export default {
     name: 'Tour',
     props: ['tour'],
@@ -122,6 +126,10 @@
         window.plugins.CallNumber.callNumber(() => {}, () => {
           Materialize.toast('Une erreur s\'est produite', 4000)
         }, this.client.telephone, true)
+      },
+      pdf () {
+        file.save(doc.pdf(this), 'tmp-visite.pdf')
+        file.open('tmp-visite.pdf')
       }
     }
   }

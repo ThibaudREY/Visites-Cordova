@@ -45,3 +45,18 @@ canvas {
     width: 100%;
     border: 2px solid red;
 }
+
+.iconRight {
+  float: right;
+}
+
+.delete {
+  margin-left: 20px;
+}
+
+.settings {
+  right: 0;
+  position: absolute;
+  top: 0;
+  padding-right: 15px;
+}

@@ -15,6 +15,15 @@
     },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.example.app"
+    },
+    "cordova-custom-config": {
+      "PACKAGE_NAME": "com.example.app"
+    },
+    "cordova-plugin-file-opener2": {
+      "PACKAGE_NAME": "com.example.app"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.example.app"
     }
   },
   "dependent_plugins": {}
