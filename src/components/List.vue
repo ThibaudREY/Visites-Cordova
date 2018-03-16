@@ -14,6 +14,8 @@
   import tour from './Tour.vue'
   import spinner from './Spinner.vue'
 
+  /* global $ */
+
   export default {
     name: 'List',
     components: {

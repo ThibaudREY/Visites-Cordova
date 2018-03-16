@@ -1,10 +1,12 @@
 export default class {
+  /* global cordova */
+
   static save (blob, filename) {
-    window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function(dir) {
+    window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function (dir) {
       console.log('Access to the directory granted succesfully')
       dir.getFile(filename, {create: true}, function (file) {
         console.log('File created succesfully.')
-        file.createWriter(function(fileWriter) {
+        file.createWriter(function (fileWriter) {
           console.log('Writing content to file')
           fileWriter.write(blob)
         }, function () {

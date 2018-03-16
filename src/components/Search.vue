@@ -72,7 +72,7 @@
       </div>
       <div class="row">
         <div class="col s12">
-          <tour v-for="tour in tours" :tour="tour"></tour>
+          <tour v-for="tour in tours" :tour="tour"/>
         </div>
       </div>
     </div>
@@ -80,8 +80,7 @@
 </template>
 
 <script>
-
-  /* global wNumb */
+  /* global $, noUiSlider */
   import Navbar from './Navbar.vue'
   import VDivider from 'vuetify/src/components/VDivider/VDivider'
   import Tour from './Tour.vue'
@@ -94,41 +93,38 @@
       Navbar
     },
     props: [],
-    mounted() {
-
+    mounted () {
       this.createCollapsible()
       this.createSlider()
-
     },
-    created(){
+    created () {
       this.agentList(this.$route.params.tour ? this.$route.params.tour.id_agent : null)
 
       setTimeout(() => {
         this.clientList(this.$route.params.tour ? this.$route.params.tour.id_visiteur : null)
       }, 500)
     },
-
-    data() {
+    data () {
       return {
         tours: null
       }
     },
     methods: {
 
-      createCollapsible(){
+      createCollapsible () {
         $(document).ready(function () {
           $('.collapsible').collapsible()
         })
       },
 
-      timestamp(str){
+      timestamp (str) {
         return new Date(str).getTime()
       },
 
       formatDate (date) {
         var months = ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet',
           'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre']
-        return date.getDate()+ ' ' +
+        return date.getDate() + ' ' +
           months[date.getMonth()] + ' ' +
           date.getFullYear()
       },
@@ -136,9 +132,7 @@
       toFormat (time) {
         return this.formatDate(new Date(time))
       },
-
-      createSlider(){
-
+      createSlider () {
         var date = new Date()
 
         // start date
@@ -166,13 +160,13 @@
           document.getElementById('event-start'), document.getElementById('event-end')
         ]
 
-        dateSlider.noUiSlider.on('update', function( values, handle ) {
+        dateSlider.noUiSlider.on('update', function (values, handle) {
           dateValues[handle].innerHTML = values[handle]
         })
       },
 
-      search(){
-        //TODO
+      search () {
+        // TODO
       },
 
       agentList (id) {
@@ -251,11 +245,11 @@
         })
       }
 
-    },
+    }
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
   .components-search {
 
   }
