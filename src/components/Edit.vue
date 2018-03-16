@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar :title="this.$route.params.tour ? 'Modifier la visite' : 'Nouvelle visite'"/>
+    <navbar :title="this.$route.params.tour !== undefined ? 'Modifier la visite' : 'Nouvelle visite'"/>
     <div class="spacer"></div>
     <div class="container" id="app">
       <div class="row">
@@ -44,7 +44,10 @@
                   <div class="row">
                     <div class="col s12">
                       <div class="center-align">
-                        <button v-on:click="send()" class="btn waves-effect waves-light">Confirmer
+                        <button v-on:click="pdf()" class="btn waves-effect waves-light">Voir le document
+                          <i class="material-icons right">send</i>
+                        </button>
+                        <button v-on:click="send()" class="btn waves-effect waves-light">Signer
                           <i class="material-icons right">send</i>
                         </button>
                       </div>
@@ -239,6 +242,8 @@
 
   import navbar from './Navbar.vue'
   import * as VueGoogleMaps from 'vue2-google-maps'
+  import doc from '../utils/doc'
+  import file from '../utils/file'
 
   export default {
     name: 'Edit',
@@ -254,7 +259,9 @@
         updateClientId: null,
         updateAgentId: null,
         deleteClientId: null,
-        deleteAgentId: null
+        deleteAgentId: null,
+        agent: null,
+        client: null
       }
     },
     methods: {
@@ -542,6 +549,20 @@
             }
           )
         }
+      },
+      pdf () {
+        this.agent = JSON.parse(localStorage.getItem('agentList')).filter(agent => {
+          if (agent.id === $('#agent').val()) {
+            return agent
+          }
+        })
+        this.client = JSON.parse(localStorage.getItem('clientList')).filter(client => {
+          if (client.id === $('#agent').val()) {
+            return client
+          }
+        })
+        file.save(doc.pdf(this, 'blob'), 'tmp-visite.pdf')
+        file.open('tmp-visite.pdf')
       }
     },
     created () {

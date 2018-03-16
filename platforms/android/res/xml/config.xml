@@ -18,6 +18,12 @@
         <param name="onload" value="true" />
     </feature>
     <allow-navigation href="cdvfile:*" />
+    <feature name="EmailComposer">
+        <param name="android-package" value="de.appplant.cordova.emailcomposer.EmailComposer" />
+    </feature>
+    <feature name="PrintPDF">
+        <param name="android-package" value="com.sgoldm.plugin.printPDF.PrintPDF" />
+    </feature>
     <name>visite</name>
     <description>A Vue.js project</description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">

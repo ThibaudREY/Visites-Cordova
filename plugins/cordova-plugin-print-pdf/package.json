@@ -1,0 +1,86 @@
+{
+  "_args": [
+    [
+      "cordova-plugin-print-pdf",
+      "/home/thibaud/WebstormProjects/Visite"
+    ]
+  ],
+  "_from": "cordova-plugin-print-pdf@latest",
+  "_id": "cordova-plugin-print-pdf@4.0.2",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/cordova-plugin-print-pdf",
+  "_nodeVersion": "5.9.0",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/cordova-plugin-print-pdf-4.0.2.tgz_1467839087796_0.7712127508129925"
+  },
+  "_npmUser": {
+    "email": "sarahrgoldman@gmail.com",
+    "name": "sgoldm"
+  },
+  "_npmVersion": "3.7.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "cordova-plugin-print-pdf",
+    "raw": "cordova-plugin-print-pdf",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-print-pdf/-/cordova-plugin-print-pdf-4.0.2.tgz",
+  "_shasum": "5712b165a38ef6b62ae816d56b0c129bf0f47caa",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-print-pdf",
+  "_where": "/home/thibaud/WebstormProjects/Visite",
+  "author": {
+    "name": "Sarah Goldman"
+  },
+  "bugs": {
+    "url": "https://github.com/sarahgoldman/cordova-print-pdf-plugin/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-print-pdf",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "dependencies": {},
+  "description": "Cordova Print PDF Plugin",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "5712b165a38ef6b62ae816d56b0c129bf0f47caa",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-print-pdf/-/cordova-plugin-print-pdf-4.0.2.tgz"
+  },
+  "gitHead": "d523317210e585fb5edbad66999dee68643908fc",
+  "homepage": "https://github.com/sarahgoldman/cordova-print-pdf-plugin#readme",
+  "keywords": [
+    "cordova",
+    "cordova-android",
+    "cordova-ios",
+    "pdf",
+    "print"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "sgoldm",
+      "email": "sarahrgoldman@gmail.com"
+    }
+  ],
+  "name": "cordova-plugin-print-pdf",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarahgoldman/cordova-print-pdf-plugin.git"
+  },
+  "scripts": {},
+  "version": "4.0.2"
+}

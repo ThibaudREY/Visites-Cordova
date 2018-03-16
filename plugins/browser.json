@@ -24,7 +24,17 @@
     },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-email-composer": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-print-pdf": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-ios-base64": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    }
+  }
 }

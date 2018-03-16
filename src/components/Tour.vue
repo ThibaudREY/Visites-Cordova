@@ -49,12 +49,12 @@
                 <div class="row"></div>
                 <div class="row">
                   <div class="col s4">
-                    <a class="btn-floating red">
+                    <a v-on:click="mail()" class="btn-floating red">
                       <i class="material-icons">mail</i>
                     </a>
                   </div>
                   <div class="col s4">
-                    <a class="btn-floating grey darken-1">
+                    <a v-on:click="print()" class="btn-floating grey darken-1">
                       <i class="material-icons">print</i>
                     </a>
                   </div>
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-  /* global $, Materialize */
+  /* global $, Materialize, cordova */
 
   import doc from '../utils/doc'
   import file from '../utils/file'
@@ -128,8 +128,19 @@
         }, this.client.telephone, true)
       },
       pdf () {
-        file.save(doc.pdf(this), 'tmp-visite.pdf')
+        this.tour['client'] = this.client
+        this.tour['agent'] = this.agent
+        file.save(doc.pdf(this.tour, 'blob'), 'tmp-visite.pdf')
         file.open('tmp-visite.pdf')
+      },
+      print () {
+        window.plugins.PrintPDF.print(doc.pdf(this, 'base64'), 'Visite')
+      },
+      mail () {
+        file.save(doc.pdf(this, 'blob'), 'visite.pdf')
+        cordova.plugins.email.open({
+          attachments: `${cordova.file.externalRootDirectory}/visite.pdf`
+        })
       }
     }
   }
